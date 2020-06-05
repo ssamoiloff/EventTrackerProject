@@ -10,7 +10,7 @@
 
 | Returns | Verb  | URI   | Description |
 |---------|-------|-------|-------------|
-| List&lt;Event%gt; | GET | api/events | Retrieve list of events |
+| List&lt;Event&gt; | GET | api/events | Retrieve list of events |
 | Event | GET | api/events/{eid} | Retrieve single event by ID |
 
 ## Technologies Used
