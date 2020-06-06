@@ -33,17 +33,30 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event eventById(int eid) {
 		Optional<Event> opt = repo.findById(eid);
-		if (opt.isPresent() && opt.get().isEnabled()) {
+		if (opt.isPresent()) {
 			Event event = opt.get();
 			return event;
 		} else {
 			return null;
 		}
 	}
+
+	@Override
+	public Event eventByIdEnabled(int eid) {
+		Event event;
+		try {
+			event = repo.findByIdAndEnabledTrue(eid);
+			return event;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Override
 	public List<Event> eventsByName(String search) {
-		return repo.findByNameAndEnabledTrue(search);
+		search = "%" + search + "%";
+		return repo.findByEnabledTrueAndNameLike(search);
 	}
 	
 	@Override

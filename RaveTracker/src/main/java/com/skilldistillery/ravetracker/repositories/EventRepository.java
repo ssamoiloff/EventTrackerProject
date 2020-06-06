@@ -10,5 +10,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
 	List<Event> findByEnabledTrue();
 	List<Event> findByEnabledFalse();
-	List<Event> findByNameAndEnabledTrue(String name);
+	List<Event> findByEnabledTrueAndNameLike(String name);
+	Event findByIdAndEnabledTrue(int eid);
 }

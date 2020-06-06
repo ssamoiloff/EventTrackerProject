@@ -11,6 +11,7 @@ public interface EventService {
 	List<Event> getAllEnabled();
 	List<Event> getAllDisabled();
 	Event eventById(int eid);
+	Event eventByIdEnabled(int eid);
 	List<Event> eventsByName(String search);
 	Event createEvent(Event event);
 	Event updateEvent(Event event);
