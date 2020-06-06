@@ -4,7 +4,7 @@
 
 ## Overview
 
-
+Rave Tracker is a service that will eventually be a hub for the American EDM subculture to find and post events in the Dance Music scene. Unregistered users will be able to search events, while registered users will have the ability to create content in addition to search for it. The intention is to unite ravers and casual festival/party goers and provide an aggregated source of information regarding EDM events, and to eventually expand the scope of this service to include countries outside of the United States. At this time, functionality will solely be focused towards the Junglists out there (Drum & Bass fans), as I personally feel we are in the most need of growth in the American scene.
 
 ## API Endpoints
 
