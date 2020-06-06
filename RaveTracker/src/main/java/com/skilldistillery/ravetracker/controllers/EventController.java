@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +68,9 @@ public class EventController {
 	
 	@PostMapping("events")
 	public Event create(@RequestBody Event event,
-			HttpServletRequest req, HttpServletResponse resp) {
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		
 		try {
 			event = svc.createEvent(event);
 			resp.setStatus(201);
@@ -83,8 +86,11 @@ public class EventController {
 	}
 	
 	@PutMapping("events/{eid}")
-	public Event update(@PathVariable Integer eid, @RequestBody Event event,
-			HttpServletRequest req, HttpServletResponse resp) {
+	public Event update(@PathVariable Integer eid,
+			@RequestBody Event event,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		
 		try {
 			event = svc.updateEvent(eid, event);
 			if (event == null) {
@@ -96,5 +102,21 @@ public class EventController {
 			event = null;
 		}
 		return event;
+	}
+	
+	@DeleteMapping("events/{eid}")
+	public void disable(@PathVariable Integer eid,
+			HttpServletResponse resp) {
+		
+		try {
+			if (svc.disableEvent(eid)) {
+				resp.setStatus(204);
+			} else {
+				resp.setStatus(404);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resp.setStatus(400);
+		}
 	}
 }

@@ -62,6 +62,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event createEvent(Event event) {
 		try {
+			event.setEnabled(true);
 			repo.save(event);
 		} catch (Exception e) {
 			e.printStackTrace();
