@@ -14,7 +14,7 @@ public interface EventService {
 	Event eventByIdEnabled(int eid);
 	List<Event> eventsByName(String search);
 	Event createEvent(Event event);
-	Event updateEvent(Event event);
+	Event updateEvent(int eid, Event event);
 	boolean disableEvent(int eid);
 	boolean enableEvent(int eid);
 }

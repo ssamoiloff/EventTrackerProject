@@ -71,8 +71,8 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public Event updateEvent(Event event) {
-		Optional<Event> current = repo.findById(event.getId());
+	public Event updateEvent(int eid, Event event) {
+		Optional<Event> current = repo.findById(eid);
 		if (current.isPresent()) {
 			Event updated = current.get();
 			updated.setName(event.getName());
