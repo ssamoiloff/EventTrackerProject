@@ -15,7 +15,7 @@ Rave Tracker is a service that will eventually be a hub for the American EDM sub
 | List&lt;Event&gt; | GET | api/events/search/{search} | Search events by name |
 | Event | POST | api/events | Create an event |
 | Event | PUT | api/events/{eid} | Update an event |
-| void | DELETE | api/events/{eid} | Disables an event |
+| void | DELETE | api/events/{eid} | Disable an event |
 
 ## Technologies Used
 * MySQL, MySQL Workbench
