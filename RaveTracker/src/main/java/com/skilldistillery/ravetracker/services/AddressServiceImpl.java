@@ -91,7 +91,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public boolean disableAddress(int aid) {
 		Optional<Address> opt = repo.findById(aid);
-		if (opt.isPresent()) {
+		if (opt.isPresent() && opt.get().isEnabled() == true) {
 			Address toDisable = opt.get();
 			toDisable.setEnabled(false);
 			repo.saveAndFlush(toDisable);

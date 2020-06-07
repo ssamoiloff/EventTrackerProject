@@ -93,7 +93,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public boolean disableEvent(int eid) {
 		Optional<Event> opt = repo.findById(eid);
-		if (opt.isPresent()) {
+		if (opt.isPresent() && opt.get().isEnabled() == true) {
 			Event toDisable = opt.get();
 			toDisable.setEnabled(false);
 			repo.saveAndFlush(toDisable);
