@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Event {
 	@Id
@@ -40,6 +42,7 @@ public class Event {
 	@UpdateTimestamp
 	private LocalDateTime updatedOn;
 	private boolean enabled;
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;

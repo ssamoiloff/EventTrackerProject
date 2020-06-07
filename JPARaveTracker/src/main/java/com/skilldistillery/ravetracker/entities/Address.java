@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Address {
 	@Id
@@ -24,6 +26,7 @@ public class Address {
 	@Column(name = "country_code")
 	private String countryCode;
 	private boolean enabled;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "address")
 	private List<Event> events;
 	

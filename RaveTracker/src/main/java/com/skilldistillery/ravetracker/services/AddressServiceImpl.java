@@ -55,32 +55,63 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public List<Address> addressesByCountryCode(String cc) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findByEnabledTrueAndCountryCode(cc);
 	}
 
 	@Override
-	public Address create(Address address) {
-		// TODO Auto-generated method stub
-		return null;
+	public Address createAddress(Address address) {
+		try {
+			address.setEnabled(true);
+			repo.save(address);
+		} catch (Exception e) {
+			e.printStackTrace();
+			address = null;
+		}
+		return address;
 	}
 
 	@Override
-	public Address update(int aid, Address address) {
-		// TODO Auto-generated method stub
-		return null;
+	public Address updateAddress(int aid, Address address) {
+		Optional<Address> current = repo.findById(aid);
+		if (current.isPresent()) {
+			Address updated = current.get();
+			updated.setStreet1(address.getStreet1());
+			updated.setStreet2(address.getStreet2());
+			updated.setCity(address.getCity());
+			updated.setStateProvince(address.getStateProvince());
+			updated.setPostalCode(address.getPostalCode());
+			updated.setCountryCode(address.getCountryCode());
+			repo.saveAndFlush(updated);
+			return updated;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public boolean disableAddress(int aid) {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Address> opt = repo.findById(aid);
+		if (opt.isPresent()) {
+			Address toDisable = opt.get();
+			toDisable.setEnabled(false);
+			repo.saveAndFlush(toDisable);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean enableAddress(int aid) {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Address> opt = repo.findById(aid);
+		if (opt.isPresent()) {
+			Address toEnable = opt.get();
+			toEnable.setEnabled(true);
+			repo.saveAndFlush(toEnable);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

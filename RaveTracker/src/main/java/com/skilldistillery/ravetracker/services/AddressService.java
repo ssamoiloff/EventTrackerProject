@@ -12,8 +12,8 @@ public interface AddressService {
 	Address addressById(int aid);
 	Address addressByIdEnabled(int aid);
 	List<Address> addressesByCountryCode(String cc);
-	Address create(Address address);
-	Address update(int aid, Address address);
+	Address createAddress(Address address);
+	Address updateAddress(int aid, Address address);
 	boolean disableAddress(int aid);
 	boolean enableAddress(int aid);
 }
