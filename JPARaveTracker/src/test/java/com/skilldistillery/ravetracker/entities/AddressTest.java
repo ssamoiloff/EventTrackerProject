@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EventTest {
+class AddressTest {
 	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Event event;
+	private Address addr;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,25 +32,26 @@ class EventTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		event = em.find(Event.class, 1);
+		addr = em.find(Address.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		event = null;
+		addr = null;
 		em.close();
 	}
 
 	@Test
 	@DisplayName("basic entity test")
 	void test() {
-		assertNotNull(event);
-		assertEquals("test", event.getName());
+		assertNotNull(addr);
+		assertEquals("945 Bryan Ct", addr.getStreet1());
+		assertEquals("USA", addr.getCountryCode());
 	}
 
 	@Test
-	@DisplayName("testing mapping to Address")
+	@DisplayName("testing mapping to Event")
 	void test2() {
-		assertEquals("945 Bryan Ct", event.getAddress().getStreet1());
+		assertEquals("test data", addr.getEvents().get(0).getDescription());
 	}
 }

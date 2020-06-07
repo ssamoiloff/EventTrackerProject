@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.skilldistillery.ravetracker.entities.Event;
 
-
 public interface EventService {
 
 	List<Event> getAll();

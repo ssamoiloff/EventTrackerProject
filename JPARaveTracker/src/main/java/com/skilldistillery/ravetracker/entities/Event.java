@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,6 +30,7 @@ public class Event {
 	private LocalTime startTime;
 	@Column(name = "end_time")
 	private LocalTime endTime;
+	private Integer capacity;
 	@Column(name = "img_url")
 	private String imgURL;
 	@Column(name = "created_on")
@@ -37,6 +40,9 @@ public class Event {
 	@UpdateTimestamp
 	private LocalDateTime updatedOn;
 	private boolean enabled;
+	@ManyToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
 	
 	public Event() {}
 
@@ -96,6 +102,14 @@ public class Event {
 		this.endTime = endTime;
 	}
 
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
+
 	public String getImgURL() {
 		return imgURL;
 	}
@@ -126,6 +140,14 @@ public class Event {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
@@ -167,6 +189,8 @@ public class Event {
 		builder.append(startTime);
 		builder.append(", endTime=");
 		builder.append(endTime);
+		builder.append(", capacity=");
+		builder.append(capacity);
 		builder.append(", imgURL=");
 		builder.append(imgURL);
 		builder.append(", createdOn=");
@@ -175,6 +199,8 @@ public class Event {
 		builder.append(updatedOn);
 		builder.append(", enabled=");
 		builder.append(enabled);
+		builder.append(", address=");
+		builder.append(address);
 		builder.append("]");
 		return builder.toString();
 	}
