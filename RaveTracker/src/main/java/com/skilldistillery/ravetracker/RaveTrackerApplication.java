@@ -2,9 +2,16 @@ package com.skilldistillery.ravetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class RaveTrackerApplication {
+public class RaveTrackerApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(RaveTrackerApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(RaveTrackerApplication.class, args);

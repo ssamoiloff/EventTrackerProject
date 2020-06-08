@@ -8,7 +8,8 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider
     	</provider>
     	
-		<class>com.skilldistillery.xtreme.entities.Event</class>
+		<class>com.skilldistillery.ravetracker.entities.Address</class>
+		<class>com.skilldistillery.ravetracker.entities.Event</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"

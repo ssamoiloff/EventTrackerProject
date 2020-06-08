@@ -63,13 +63,44 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dj`
+-- Table `stage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dj` ;
+DROP TABLE IF EXISTS `stage` ;
 
-CREATE TABLE IF NOT EXISTS `dj` (
+CREATE TABLE IF NOT EXISTS `stage` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`))
+  `event_id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_stage_event1_idx` (`event_id` ASC),
+  CONSTRAINT `fk_stage_event1`
+    FOREIGN KEY (`event_id`)
+    REFERENCES `event` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `artist`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `artist` ;
+
+CREATE TABLE IF NOT EXISTS `artist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `stage_id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `bio` TEXT NULL,
+  `set_time` TIME NULL,
+  `img_url` VARCHAR(5000) NULL,
+  `enabled` TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  INDEX `fk_dj_stage1_idx` (`stage_id` ASC),
+  CONSTRAINT `fk_dj_stage1`
+    FOREIGN KEY (`stage_id`)
+    REFERENCES `stage` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -107,35 +138,40 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stage`
+-- Table `genre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `stage` ;
+DROP TABLE IF EXISTS `genre` ;
 
-CREATE TABLE IF NOT EXISTS `stage` (
+CREATE TABLE IF NOT EXISTS `genre` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `subgenre` VARCHAR(45) NULL,
+  `description` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `set`
+-- Table `artist_of_genre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `set` ;
+DROP TABLE IF EXISTS `artist_of_genre` ;
 
-CREATE TABLE IF NOT EXISTS `set` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `subgenre`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `subgenre` ;
-
-CREATE TABLE IF NOT EXISTS `subgenre` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`))
+CREATE TABLE IF NOT EXISTS `artist_of_genre` (
+  `genre_id` INT NOT NULL,
+  `dj_id` INT NOT NULL,
+  PRIMARY KEY (`genre_id`, `dj_id`),
+  INDEX `fk_genre_has_dj_dj1_idx` (`dj_id` ASC),
+  INDEX `fk_genre_has_dj_genre1_idx` (`genre_id` ASC),
+  CONSTRAINT `fk_genre_has_dj_genre1`
+    FOREIGN KEY (`genre_id`)
+    REFERENCES `genre` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_genre_has_dj_dj1`
+    FOREIGN KEY (`dj_id`)
+    REFERENCES `artist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
