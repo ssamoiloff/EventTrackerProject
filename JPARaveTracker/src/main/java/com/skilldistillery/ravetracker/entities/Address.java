@@ -1,15 +1,15 @@
 package com.skilldistillery.ravetracker.entities;
 
-import java.util.List;
+//import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+//import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Address {
@@ -26,11 +26,19 @@ public class Address {
 	@Column(name = "country_code")
 	private String countryCode;
 	private boolean enabled;
-	@JsonManagedReference
-	@OneToMany(mappedBy = "address")
-	private List<Event> events;
+//	@JsonManagedReference
+//	@OneToMany(mappedBy = "address")
+//	private List<Event> events;
 	
 	public Address() {}
+
+	public Address(int id, String stateProvince, String countryCode, boolean enabled) {
+		super();
+		this.id = id;
+		this.stateProvince = stateProvince;
+		this.countryCode = countryCode;
+		this.enabled = enabled;
+	}
 
 	public int getId() {
 		return id;
@@ -96,13 +104,13 @@ public class Address {
 		this.enabled = enabled;
 	}
 
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
+//	public List<Event> getEvents() {
+//		return events;
+//	}
+//
+//	public void setEvents(List<Event> events) {
+//		this.events = events;
+//	}
 
 	@Override
 	public int hashCode() {

@@ -9,13 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Event {
@@ -32,7 +32,7 @@ public class Event {
 	private LocalTime startTime;
 	@Column(name = "end_time")
 	private LocalTime endTime;
-	private Integer capacity;
+	private Integer capacity = 0;
 	@Column(name = "img_url")
 	private String imgURL;
 	@Column(name = "created_on")
@@ -42,10 +42,10 @@ public class Event {
 	@UpdateTimestamp
 	private LocalDateTime updatedOn;
 	private boolean enabled;
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "address_id")
-	private Address address;
+//	@JsonBackReference
+//	@ManyToOne
+//	@JoinColumn(name = "address_id")
+//	private Address address;
 	
 	public Event() {}
 
@@ -145,13 +145,13 @@ public class Event {
 		this.enabled = enabled;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -203,7 +203,7 @@ public class Event {
 		builder.append(", enabled=");
 		builder.append(enabled);
 		builder.append(", address=");
-		builder.append(address);
+//		builder.append(address);
 		builder.append("]");
 		return builder.toString();
 	}

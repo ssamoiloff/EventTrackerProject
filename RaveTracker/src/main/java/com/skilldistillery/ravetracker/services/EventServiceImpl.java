@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+//import com.skilldistillery.ravetracker.entities.Address;
 import com.skilldistillery.ravetracker.entities.Event;
 import com.skilldistillery.ravetracker.repositories.EventRepository;
 
@@ -63,6 +64,7 @@ public class EventServiceImpl implements EventService {
 	public Event createEvent(Event event) {
 		try {
 			event.setEnabled(true);
+//			event.setAddress(new Address());
 			repo.save(event);
 		} catch (Exception e) {
 			e.printStackTrace();

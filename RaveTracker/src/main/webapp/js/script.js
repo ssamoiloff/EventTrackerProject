@@ -7,11 +7,20 @@ function init() {
 	var allEventsDiv = document.getElementById('allEvents');
 	allEventsDiv.textContent = '';
 	getAllEvents();
+
+	document.newEventForm.addEvent.addEventListener('click', function(e) {
+		e.preventDefault();
+		createEvent();
+		// getAllEvents();
+	});
 	//TODO Everything lol
 }
 
 function createTable(events) {
+	console.log('in createTable()');
+	
 	let allEventsDiv = document.getElementById('allEvents');
+	allEventsDiv.textContent = '';
 	let table = document.createElement('table');
 	let head = document.createElement('thead');
 	let body = document.createElement('tbody');
@@ -83,6 +92,8 @@ function createTable(events) {
 }
 
 function getAllEvents() {
+	console.log('in getAllEvents()');
+	
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/events');
 	xhr.onreadystatechange = function () {
@@ -93,17 +104,68 @@ function getAllEvents() {
 				createTable(events);
 			}
 			else {
-				errorMessage('Error retrieving events');
+				allEventsErrorMessage('Error retrieving events');
 			}
 		}
 	}
 	xhr.send();
 }
 
+function createEvent() {
+	let form = document.newEventForm;
+	let event = {};
+	event.name = form.name.value;
+	event.description = form.description.value;
+	event.startDate = form.startDate.value;
+	event.endDate = form.endDate.value;
+	event.startTime = form.startTime.value;
+	event.endTime = form.endTime.value;
+	event.capacity = form.capacity.value;
+	event.imgURL = form.imgURL.value;
+	console.log('createEvent():');
+	console.log(event);
+	postEvent(event);	
+}
+
+function postEvent(event) {
+	let eventJSON = JSON.stringify(event);
+	let xhr = new XMLHttpRequest();
+	let uri = 'api/events';
+
+	xhr.open('POST', uri);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200 || xhr.status === 201) {
+				let createdEvent = JSON.parse(xhr.responseText);
+				console.log(createdEvent);
+				getAllEvents();
+			}
+			else {
+				if (xhr.status === 400) {
+					createEventErrorMessage(`Invalid event data, unable to create event from ${eventJSON}`);
+				}
+				else {
+					createEventErrorMessage('Unknown error creating event');
+				}
+			}
+		}
+	}
+	xhr.send(eventJSON);
+}
+
 function displayEvents(events) {
 
 }
 
-function errorMessage(msg) {
+function allEventsErrorMessage(msg) {
+	let allEventsDiv = document.getElementById('allEvents');
+	allEventsDiv.textContent = '';
+	allEventsDiv.textContent = msg;
+}
 
+function createEventErrorMessage(msg) {
+	let errorDiv = document.getElementById('errorMessage');
+	errorDiv.textContent = '';
+	errorDiv.textContent = msg;
 }
