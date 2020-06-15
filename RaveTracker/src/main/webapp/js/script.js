@@ -8,7 +8,7 @@ function init() {
 	allEventsDiv.textContent = '';
 	getAllEvents();
 
-	document.newEventForm.addEvent.addEventListener('click', function(e) {
+	document.newEventForm.addEvent.addEventListener('click', function (e) {
 		e.preventDefault();
 		createEvent();
 		// getAllEvents();
@@ -18,10 +18,11 @@ function init() {
 
 function createTable(events) {
 	console.log('in createTable()');
-	
+
 	let allEventsDiv = document.getElementById('allEvents');
 	allEventsDiv.textContent = '';
 	let table = document.createElement('table');
+	table.id = 'eventsTable';
 	let head = document.createElement('thead');
 	let body = document.createElement('tbody');
 
@@ -30,27 +31,6 @@ function createTable(events) {
 	let headName = document.createElement('th');
 	headName.textContent = 'Event Name';
 	headerRow.appendChild(headName);
-	let headDesc = document.createElement('th');
-	headDesc.textContent = 'Description';
-	headerRow.appendChild(headDesc);
-	let headStDate = document.createElement('th');
-	headStDate.textContent = 'Start Date';
-	headerRow.appendChild(headStDate);
-	let headEndDate = document.createElement('th');
-	headEndDate.textContent = 'End Date';
-	headerRow.appendChild(headEndDate);
-	let headStTime = document.createElement('th');
-	headStTime.textContent = 'Start Time';
-	headerRow.appendChild(headStTime);
-	let headEndTime = document.createElement('th');
-	headEndTime.textContent = 'End Time';
-	headerRow.appendChild(headEndTime);
-	let headCap = document.createElement('th');
-	headCap.textContent = 'Capacity';
-	headerRow.appendChild(headCap)
-	let headImgURL = document.createElement('th');
-	headImgURL.textContent = 'Image URL';
-	headerRow.appendChild(headImgURL);
 
 	head.appendChild(headerRow);
 	table.appendChild(head);
@@ -58,32 +38,16 @@ function createTable(events) {
 	for (let i = 0; i < events.length; i++) {
 		let event = events[i];
 		let row = document.createElement('tr');
+		row.id = 'eventRow' + i;
+		row.addEventListener('click', function (e) {
+			e.preventDefault();
+			console.log('event clicked');
+		});
 
 		let name = document.createElement('td');
 		name.textContent = event.name;
-		let desc = document.createElement('td');
-		desc.textContent = event.description;
-		let sDate = document.createElement('td');
-		sDate.textContent = event.startDate;
-		let eDate = document.createElement('td');
-		eDate.textContent = event.endDate;
-		let sTime = document.createElement('td');
-		sTime.textContent = event.startTime;
-		let eTime = document.createElement('td');
-		eTime.textContent = event.endTime;
-		let cap = document.createElement('td');
-		cap.textContent = event.capacity;
-		let img = document.createElement('td');
-		img.textContent = event.imgURL;
 
 		row.appendChild(name);
-		row.appendChild(desc);
-		row.appendChild(sDate);
-		row.appendChild(eDate);
-		row.appendChild(sTime);
-		row.appendChild(eTime);
-		row.appendChild(cap);
-		row.appendChild(img);
 		body.appendChild(row);
 	}
 
@@ -93,7 +57,7 @@ function createTable(events) {
 
 function getAllEvents() {
 	console.log('in getAllEvents()');
-	
+
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/events');
 	xhr.onreadystatechange = function () {
@@ -124,7 +88,7 @@ function createEvent() {
 	event.imgURL = form.imgURL.value;
 	console.log('createEvent():');
 	console.log(event);
-	postEvent(event);	
+	postEvent(event);
 }
 
 function postEvent(event) {
@@ -134,7 +98,7 @@ function postEvent(event) {
 
 	xhr.open('POST', uri);
 	xhr.setRequestHeader('Content-type', 'application/json');
-	xhr.onreadystatechange = function() {
+	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let createdEvent = JSON.parse(xhr.responseText);
@@ -154,8 +118,92 @@ function postEvent(event) {
 	xhr.send(eventJSON);
 }
 
-function displayEvents(events) {
+function editForm(event) {
+	let form = document.createElement('form');
+	form.name = 'editForm';
 
+	let name = document.createElement('input');
+	name.type = 'text';
+	name.name = 'name';
+	name.placeholder = event.name;
+	document.createElement('br');
+	form.appendChild(name);
+
+	let desc = document.createElement('textarea');
+	desc.name = 'description';
+	desc.placeholder = event.description;
+	document.createElement('br');
+	form.appendChild(desc);
+
+	let sDate = document.createElement('input');
+	sDate.type = 'date';
+	sDate.name = 'startDate';
+	sDate.placeholder = event.startDate;
+	document.createElement('br');
+	form.appendChild(sDate);
+
+	let eDate = document.createElement('input');
+	eDate.type = 'date';
+	eDate.name = 'endDate';
+	eDate.placeholder = event.endDate;
+	document.createElement('br');
+	form.appendChild(eDate);
+
+	let sTime = document.createElement('input');
+	sTime.type = 'time';
+	sTime.name = 'startTime';
+	sTime.placeholder = event.startTime;
+	document.createElement('br');
+	form.appendChild(sTime);
+
+	let eTime = document.createElement('input');
+	eTime.type = 'time';
+	eTime.name = 'endTime';
+	eTime.placeholder = event.endTime;
+	document.createElement('br');
+	form.appendChild(eTime);
+
+	let cap = document.createElement('input');
+	cap.type = 'number';
+	cap.name = 'capacity';
+	cap.placeholder = event.capacity;
+	document.createElement('br');
+	form.appendChild(cap);
+
+	let img = document.createElement('input');
+	img.type = 'text';
+	img.name = 'imgURL';
+	img.placeholder = event.imgURL;
+	document.createElement('br');
+	form.appendChild(img);
+
+	let submitButton = document.createElement('input');
+	submitButton.type = 'submit';
+	submitButton.name = 'editButton';
+	submitButton.value = 'Submit Edit';
+	form.appendChild(submitButton);
+
+	let deleteButton = document.createElement('input');
+	deleteButton.type = 'submit';
+	deleteButton.name = 'deleteButton';
+	deleteButton.value = 'Delete Event';
+	form.appendChild(deleteButton);
+
+	submitButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		let xhr = new XMLHttpRequest();
+		xhr.open('PUT', `api/events/${event.id}`);
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+
+				}
+			}
+		}
+	});
+
+	deleteButton.addEventListener('click', function(e))
 }
 
 function allEventsErrorMessage(msg) {
@@ -165,7 +213,7 @@ function allEventsErrorMessage(msg) {
 }
 
 function createEventErrorMessage(msg) {
-	let errorDiv = document.getElementById('errorMessage');
+	let errorDiv = document.getElementById('statusMessage');
 	errorDiv.textContent = '';
 	errorDiv.textContent = msg;
 }

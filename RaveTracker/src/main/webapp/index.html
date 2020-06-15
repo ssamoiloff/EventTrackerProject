@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Rave Tracker</title>
 <script type="text/javascript" src="js/script.js"></script>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -11,6 +12,9 @@
 
 	<div class="output">
 		<div id="allEvents"></div>
+		<br>
+		<div id="editView"></div>
+		<br>
 		<div id="errorMessage"></div>
 	</div>
 
@@ -22,7 +26,7 @@
 			<input type="text" name="name" placeholder="Event name">
 			<br><br>
 			<label for="description">Description</label><br>
-			<textarea name="description" id="description" cols="50" rows="10"></textarea>
+			<textarea name="description" id="description" cols="50" rows="5"></textarea>
 			<br><br>
 			<label for="startDate">Start Date</label><br>
 			<input type="date" name="startDate">

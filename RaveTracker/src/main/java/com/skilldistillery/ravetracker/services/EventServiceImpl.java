@@ -64,7 +64,6 @@ public class EventServiceImpl implements EventService {
 	public Event createEvent(Event event) {
 		try {
 			event.setEnabled(true);
-//			event.setAddress(new Address());
 			repo.save(event);
 		} catch (Exception e) {
 			e.printStackTrace();
