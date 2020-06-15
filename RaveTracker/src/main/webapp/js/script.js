@@ -6,23 +6,23 @@ function init() {
 	console.log('script.js loaded');
 	var allEventsDiv = document.getElementById('allEvents');
 	allEventsDiv.textContent = '';
+	var summerEventsDiv = document.getElementById('summerEvents');
+	summerEventsDiv.textContent = '';
 	getAllEvents();
 
 	document.newEventForm.addEvent.addEventListener('click', function (e) {
 		e.preventDefault();
 		createEvent();
+		document.newEventForm.reset();
 	});
-	//TODO Everything lol
 }
 
-
 function eventTable(events) {
-	console.log('in eventTable()');
-	
 	let allEventsDiv = document.getElementById('allEvents');
 	allEventsDiv.textContent = '';
 	let table = document.createElement('table');
 	table.id = 'eventsTable';
+	table.width = '50%';
 	let head = document.createElement('thead');
 	let body = document.createElement('tbody');
 	
@@ -31,7 +31,7 @@ function eventTable(events) {
 	let headName = document.createElement('th');
 	headName.textContent = 'Event Name';
 	headerRow.appendChild(headName);
-	
+
 	head.appendChild(headerRow);
 	table.appendChild(head);
 	
@@ -56,6 +56,41 @@ function eventTable(events) {
 	allEventsDiv.appendChild(table);
 }
 
+function summerEventTable(events) {
+	let summerEventsDiv = document.getElementById('summerEvents');
+	summerEventsDiv.textContent = '';
+	let table = document.createElement('table');
+	table.id = 'summerEventsTable';
+	table.width = '50%';
+	let head = document.createElement('thead');
+	let body = document.createElement('tbody');
+	
+	let headerRow = document.createElement('tr');
+	
+	let headName = document.createElement('th');
+	headName.textContent = 'Summer Events';
+	headerRow.appendChild(headName);
+
+	head.appendChild(headerRow);
+	table.appendChild(head);
+	
+	for (let i = 0; i < events.length; i++) {
+		let event = events[i];
+		if (event.startDate >= '2021-06-01' && event.startDate <= '2021-09-01') {
+			let row = document.createElement('tr');
+			row.id = 'summerEventRow' + i;
+			let name = document.createElement('td');
+			name.textContent = event.name;
+			
+			row.appendChild(name);
+			body.appendChild(row);
+		}
+	}
+	
+	table.appendChild(body);
+	summerEventsDiv.appendChild(table);
+}
+
 function getAllEvents() {
 	console.log('in getAllEvents()');
 	let xhr = new XMLHttpRequest();
@@ -66,6 +101,7 @@ function getAllEvents() {
 				let eventJSON = xhr.responseText;
 				let events = JSON.parse(eventJSON);
 				eventTable(events);
+				summerEventTable(events);
 			}
 			else {
 				allEventsErrorMessage('Error retrieving events');
@@ -303,6 +339,7 @@ function putEvent(event) {
 			if (xhr.status === 200) {
 				let updatedEvent = JSON.parse(xhr.responseText);
 				console.log(updatedEvent);
+				getAllEvents();
 			}
 			else {
 				if (xhr.status === 400) {
