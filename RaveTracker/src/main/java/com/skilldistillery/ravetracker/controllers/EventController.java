@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.skilldistillery.ravetracker.services.EventService;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin({ "*", "http://localhost:4202" })
 public class EventController {
 
 	@Autowired
@@ -82,6 +84,7 @@ public class EventController {
 			resp.setStatus(400);
 			event = null;
 		}
+		
 		return event;
 	}
 	
@@ -96,11 +99,13 @@ public class EventController {
 			if (event == null) {
 				resp.setStatus(404);
 			}
+			resp.setStatus(200);
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.setStatus(400);
 			event = null;
 		}
+		
 		return event;
 	}
 	
