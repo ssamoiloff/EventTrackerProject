@@ -11,8 +11,8 @@ export class EventsComponent implements OnInit {
 
   events = [];
   newEvent: Event = new Event();
-  selected = null;
   editEvent = null;
+  selected = null;
   isCollapsed: boolean;
 
   constructor(private eventsService: EventsService) { }
@@ -37,5 +37,29 @@ export class EventsComponent implements OnInit {
 
   displayEvent(event: Event) {
     this.selected = event;
+  }
+
+  displayTable() {
+    this.selected = null;
+  }
+
+  setEditEvent() {
+    this.editEvent = Object.assign({}, this.selected);
+  }
+
+  addEvent(event: Event) {
+    console.log(this.newEvent);
+
+    this.eventsService.create(event).subscribe(
+      event => {
+        console.log(event);
+        this.reload();
+        this.newEvent = new Event();
+      },
+      fail => {
+        console.error('EventComponent.addEvent(): Error adding event');
+        console.error(fail);
+      }
+    );
   }
 }

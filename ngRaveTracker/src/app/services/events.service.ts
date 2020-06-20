@@ -33,7 +33,12 @@ export class EventsService {
   }
 
   create(event) {
-    return null;
+    return this.http.post<Event>(this.url, event).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError('EventsService.create(): Error creating event: '+ err);
+      })
+    );
   }
 
   update(event) {
