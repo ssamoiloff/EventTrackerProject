@@ -1,4 +1,3 @@
-import { ɵLocaleDataIndex } from '@angular/core';
 import { Time } from '@angular/common';
 
 export class Event {
