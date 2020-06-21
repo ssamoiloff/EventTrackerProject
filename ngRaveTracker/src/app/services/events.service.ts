@@ -18,7 +18,7 @@ export class EventsService {
     return this.http.get<Event[]>(this.url).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError('EventsService.index(): Error retrieving events' + err);
+        return throwError('EventsService.index(): Error retrieving events'+ err);
       })
     );
   }
@@ -27,7 +27,7 @@ export class EventsService {
     return this.http.get<Event>(`${this.url}/${eid}`).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError('EventsService.show(): Error retrieving event: ' + err);
+        return throwError('EventsService.show(): Error retrieving event: '+ err);
       })
     );
   }
@@ -42,10 +42,20 @@ export class EventsService {
   }
 
   update(event) {
-    return null;
+    return this.http.put<Event>(`${this.url}/${event.id}`, event).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError('EventsService.update(): Error updating event: '+ err);
+      })
+    );
   }
 
   destroy(eid: number) {
-    return null;
+    return this.http.delete<Event>(`${this.url}/${eid}`).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError('EventsService.destroy(): Error destroying event: '+ err);
+      })
+    );
   }
 }

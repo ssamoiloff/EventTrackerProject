@@ -48,8 +48,6 @@ export class EventsComponent implements OnInit {
   }
 
   addEvent(event: Event) {
-    console.log(this.newEvent);
-
     this.eventsService.create(event).subscribe(
       event => {
         console.log(event);
@@ -61,5 +59,34 @@ export class EventsComponent implements OnInit {
         console.error(fail);
       }
     );
+  }
+
+  updateEvent(event: Event) {
+    this.eventsService.update(event).subscribe(
+      event => {
+        console.log(event);
+        this.reload();
+        this.selected = event;
+        this.editEvent = null;
+      },
+      fail => {
+        console.error('EventsComponent.updateEvent(): Error updating event');
+        console.error(fail);
+      }
+    )
+  }
+
+  deleteEvent(eid: number) {
+    this.eventsService.destroy(eid).subscribe(
+      success => {
+        console.log('Success destroying event');
+        console.log(success);
+        this.reload();
+      },
+      fail => {
+        console.error('EventsComponent.deleteEvent(): Error destroying event');
+        console.error(fail);
+      }
+    )
   }
 }
