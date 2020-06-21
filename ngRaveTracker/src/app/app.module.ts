@@ -10,6 +10,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EventsComponent,
     HomeComponent,
     NavBarComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CreateEventComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

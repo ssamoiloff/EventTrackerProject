@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
+import { ActivatedRoute } from '@angular/router';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,12 +10,11 @@ import { EventsService } from 'src/app/services/events.service';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private eventsService: EventsService) { }
+  isCollapsed: boolean;
+
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  searchById(eid: number){
-
-  }
 }

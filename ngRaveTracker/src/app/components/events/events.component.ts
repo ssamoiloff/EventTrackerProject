@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { Event } from 'src/app/models/event';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -15,7 +16,10 @@ export class EventsComponent implements OnInit {
   selected = null;
   isCollapsed: boolean;
 
-  constructor(private eventsService: EventsService) { }
+  constructor(
+    private eventsService: EventsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.isCollapsed = true;
@@ -77,16 +81,19 @@ export class EventsComponent implements OnInit {
   }
 
   deleteEvent(eid: number) {
-    this.eventsService.destroy(eid).subscribe(
-      success => {
-        console.log('Success destroying event');
-        console.log(success);
-        this.reload();
-      },
-      fail => {
-        console.error('EventsComponent.deleteEvent(): Error destroying event');
-        console.error(fail);
-      }
-    )
+    if (confirm('Are you sure you want to delete this event?')) {
+      this.eventsService.destroy(eid).subscribe(
+        success => {
+          console.log('Success destroying event');
+          console.log(success);
+          this.reload();
+          this.router.navigateByUrl('home');
+        },
+        fail => {
+          console.error('EventsComponent.deleteEvent(): Error destroying event');
+          console.error(fail);
+        }
+      )
+    }
   }
 }

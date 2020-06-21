@@ -5,85 +5,25 @@
   <table class="table table-hover table-dark" id="all-events-table">
     <thead class="thead-light">
       <tr>
+        <th scope="col">Image</th>
         <th scope="col" style="width: 15%;">Event Name</th>
         <th scope="col">Description</th>
-        <th scope="col" style="width: 8%;">Start Date</th>
-        <th scope="col">Image</th>
+        <th scope="col" style="width: 10%;">Date</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let event of events" (click)="displayEvent(event)">
+        <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
         <td><strong>{{event.name}}</strong></td>
         <td>{{event.description}}</td>
         <td>{{event.startDate}}</td>
-        <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-
 <div id="create-event-div" *ngIf="!selected && !editEvent">
-  <p>
-    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Create New Event</button>
-  </p>
-
-  <div id="create-event-form" [ngbCollapse]="isCollapsed">
-    <div class="card">
-      <div class="card-body">
-
-        <form>
-          <div class="form-group">
-            <label for="name">Event Name</label>
-            <input type="text" class="form-control" name="name" id="name" required [(ngModel)]="newEvent.name">
-          </div>
-          <div class="form-group">
-            <label for="description">Event Description</label>
-            <textarea class="form-control" name="description" id="description" rows="3" [(ngModel)]="newEvent.description"></textarea>
-          </div>
-          <div class="form-row">
-            <div class="col">
-              <div class="form-group">
-                <label for="start-date">Start Date</label>
-                <input type="date" class="form-control" name="startDate" id="start-date" required [(ngModel)]="newEvent.startDate">
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="end-date">End Date</label>
-                <input type="date" class="form-control" name="endDate" id="end-date" [(ngModel)]="newEvent.endDate">
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="start-time">Start Time</label>
-                <input type="time" class="form-control" name="startTime" id="start-time" required [(ngModel)]="newEvent.startTime">
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="end-time">End Time</label>
-                <input type="time" class="form-control" name="endTime" id="end-time" [(ngModel)]="newEvent.endTime">
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="capacity">Event Capacity</label>
-                <input type="number" class="form-control" name="capacity" id="capacity" [(ngModel)]="newEvent.capacity">
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="img-url">Event Image URL</label>
-            <input type="text" class="form-control" name="imgURL" id="img-url" [(ngModel)]="newEvent.imgURL">
-          </div>
-          <button class="btn btn-success" (click)="addEvent(newEvent)">Create Event</button>
-        </form>
-
-      </div>
-    </div>
-  </div>
+  <app-create-event></app-create-event>
 </div>
 <br>
 
@@ -106,6 +46,8 @@
         <button class="btn btn-light" id="back" (click)="displayTable()">Back</button>
         <div class="divider"></div>
         <button class="btn btn-primary" id="edit" (click)="setEditEvent()">Edit</button>
+        <div class="divider"></div>
+        <button class="btn btn-danger" id="delete" (click)="deleteEvent(selected.id)">Delete</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,118 @@
+<p>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample"
+  >
+    Create New Event
+  </button>
+</p>
+
+<div id="create-event-form" [ngbCollapse]="isCollapsed">
+  <div class="card">
+    <div class="card-body">
+      <form #newEvent="ngForm">
+        <div class="form-group">
+          <label for="name">Event Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            id="name"
+            required
+            ngModel
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Event Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="description"
+            rows="3"
+            ngModel
+          ></textarea>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="start-date">Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                name="startDate"
+                id="start-date"
+                required
+                ngModel
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="end-date">End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                name="endDate"
+                id="end-date"
+                ngModel
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="start-time">Start Time</label>
+              <input
+                type="time"
+                class="form-control"
+                name="startTime"
+                id="start-time"
+                required
+                ngModel
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="end-time">End Time</label>
+              <input
+                type="time"
+                class="form-control"
+                name="endTime"
+                id="end-time"
+                ngModel
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="capacity">Event Capacity</label>
+              <input
+                type="number"
+                class="form-control"
+                name="capacity"
+                id="capacity"
+                ngModel
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="img-url">Event Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            name="imgURL"
+            id="img-url"
+            ngModel
+          />
+        </div>
+        <button class="btn btn-success" (click)="addEvent(newEvent)">
+          Create Event
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
