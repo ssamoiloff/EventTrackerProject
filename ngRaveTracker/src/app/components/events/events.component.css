@@ -12,7 +12,11 @@ h2 {
   padding: 1em 1em;
 }
 
-.card-title {
+#event-edit-form {
+  color: white;
+}
+
+.card-title, .card-text {
   color: white;
 }
 
@@ -20,16 +24,21 @@ h2 {
   color: #adadad;
 }
 
-.card-text {
-  color: white;
+.event-details-buttons, .event-edit-buttons {
+  text-align: center;
 }
 
-.detail-buttons {
-  text-align: center;
+.event-details-buttons > button, .event-edit-buttons > button {
+  width: 100px;
 }
 
 .divider {
   width: 15px;
   height: auto;
   display: inline-block;
+}
+
+hr.rounded {
+  border-top: 2px solid #adadad;
+  border-radius: 2px;
 }

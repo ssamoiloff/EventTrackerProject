@@ -1,6 +1,7 @@
 <div id="all-events" *ngIf="!selected">
   <br>
   <h2>All Events</h2>
+  <br>
   <table class="table table-hover table-dark" id="all-events-table">
     <thead class="thead-light">
       <tr>
@@ -21,31 +22,8 @@
   </table>
 </div>
 
-<div id="event-detail" *ngIf="selected && !editEvent">
-  <h2>Event Details</h2>
-  <br>
-  <div class="card" id="event-card" style="width: 30rem;">
-    <img src="{{selected.imgURL}}" class="card-img-top" alt="{{selected.name}}">
-    <div class="card-body">
-      <h5 class="card-title">{{selected.name}}</h5>
-      <h6 class="card-subtitle">{{selected.description}}</h6>
-      <br>
-      <p class="card-text">Start Date: {{selected.startDate}}</p>
-      <p class="card-text">End Date: {{selected.endDate}}</p>
-      <p class="card-text">Start Time: {{selected.startTime}}</p>
-      <p class="card-text">End Time: {{selected.endTime}}</p>
-      <p class="card-text">Capacity: {{selected.capacity}}</p>
-      <div class="detail-buttons">
-        <button class="btn btn-light" id="back" (click)="displayTable()">Back</button>
-        <div class="divider"></div>
-        <button class="btn btn-primary" id="edit" (click)="setEditEvent()">Edit</button>
-      </div>
-    </div>
-  </div>
-</div>
-<br>
 
-<div id="create-event-div" *ngIf="!selected">
+<div id="create-event-div" *ngIf="!selected && !editEvent">
   <p>
     <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
     [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Create New Event</button>
@@ -107,3 +85,89 @@
     </div>
   </div>
 </div>
+<br>
+
+<div id="event-details" *ngIf="selected && !editEvent">
+  <h2>Event Details</h2>
+  <br>
+  <div class="card" id="event-card" style="width: 30rem;">
+    <img src="{{selected.imgURL}}" class="card-img-top" alt="{{selected.name}}">
+    <div class="card-body">
+      <h5 class="card-title">{{selected.name}}</h5>
+      <h6 class="card-subtitle">{{selected.description}}</h6>
+      <br>
+      <p class="card-text">Start Date: {{selected.startDate}}</p>
+      <p class="card-text">End Date: {{selected.endDate}}</p>
+      <p class="card-text">Start Time: {{selected.startTime}}</p>
+      <p class="card-text">End Time: {{selected.endTime}}</p>
+      <p class="card-text">Capacity: {{selected.capacity}}</p>
+
+      <div class="event-details-buttons">
+        <button class="btn btn-light" id="back" (click)="displayTable()">Back</button>
+        <div class="divider"></div>
+        <button class="btn btn-primary" id="edit" (click)="setEditEvent()">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="event-edit" *ngIf="editEvent">
+  <h2>Edit Event</h2>
+  <br>
+  <div class="card" id="event-card" style="width: 30rem;">
+    <img src="{{selected.imgURL}}" class="card-img-top" alt="{{selected.name}}">
+    <div class="card-body">
+      <h5 class="card-title">{{selected.name}}</h5>
+      <h6 class="card-subtitle">{{selected.description}}</h6>
+      <br>
+      <p class="card-text">Start Date: {{selected.startDate}}</p>
+      <p class="card-text">End Date: {{selected.endDate}}</p>
+      <p class="card-text">Start Time: {{selected.startTime}}</p>
+      <p class="card-text">End Time: {{selected.endTime}}</p>
+      <p class="card-text">Capacity: {{selected.capacity}}</p>
+      <hr class="rounded">
+
+      <form id="event-edit-form">
+        <div class="form-group">
+          <label for="name">Event Name</label>
+          <input type="text" class="form-control" name="name" id="name" required [(ngModel)]="editEvent.name">
+        </div>
+        <div class="form-group">
+          <label for="description">Event Description</label>
+          <textarea class="form-control" name="description" id="description" rows="3" [(ngModel)]="editEvent.description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="start-date">Start Date</label>
+          <input type="date" class="form-control" name="startDate" id="start-date" required [(ngModel)]="editEvent.startDate">
+        </div>
+        <div class="form-group">
+          <label for="end-date">End Date</label>
+          <input type="date" class="form-control" name="endDate" id="end-date" [(ngModel)]="editEvent.endDate">
+        </div>
+        <div class="form-group">
+          <label for="start-time">Start Time</label>
+          <input type="time" class="form-control" name="startTime" id="start-time" required [(ngModel)]="editEvent.startTime">
+        </div>
+        <div class="form-group">
+          <label for="end-time">End Time</label>
+          <input type="time" class="form-control" name="endTime" id="end-time" [(ngModel)]="editEvent.endTime">
+        </div>
+        <div class="form-group">
+          <label for="capacity">Event Capacity</label>
+          <input type="number" class="form-control" name="capacity" id="capacity" [(ngModel)]="editEvent.capacity">
+        </div>
+        <div class="form-group">
+          <label for="img-url">Event Image URL</label>
+          <input type="text" class="form-control" name="imgURL" id="img-url" [(ngModel)]="editEvent.imgURL">
+        </div>
+
+        <div class="event-edit-buttons">
+          <button class="btn btn-danger" id="back" (click)="editEvent = null">Cancel</button>
+          <div class="divider"></div>
+          <button class="btn btn-success" id="edit" (click)="updateEvent(editEvent)">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
