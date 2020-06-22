@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService } from 'src/app/services/events.service';
-import { ActivatedRoute } from '@angular/router';
-import { isNumber } from 'util';
+import { Component, OnInit, Query } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,11 +9,14 @@ import { isNumber } from 'util';
 })
 export class NavBarComponent implements OnInit {
 
-  isCollapsed: boolean;
+  query = null;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  routeSearch(searchQuery) {
+    this.router.navigateByUrl(`/search/${searchQuery}`);
+  }
 }

@@ -26,7 +26,7 @@ export class CreateEventComponent implements OnInit {
     this.eventsService.create(event).subscribe(
       newEvent => {
         console.log(newEvent);
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('events');
       },
       fail => {
         console.error('EventComponent.addEvent(): Error adding event');

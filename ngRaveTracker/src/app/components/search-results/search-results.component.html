@@ -1,1 +1,52 @@
-<p>search-results works!</p>
+<div id="search-results-div">
+  <br>
+  <h2>Search Results</h2>
+  <br>
+
+  <div id="single-result-table" *ngIf="isSingleResult">
+    <table class="table table-hover table-dark" id="search-results-table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Event ID</th>
+          <th scope="col">Image</th>
+          <th scope="col" style="width: 15%;">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col" style="width: 10%;">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{eventResult.id}}</td>
+          <td><img src="{{eventResult.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+          <td><strong>{{eventResult.name}}</strong></td>
+          <td>{{eventResult.description}}</td>
+          <td>{{eventResult.startDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="multiple-results-table" *ngIf="!isSingleResult">
+    <table class="table table-hover table-dark" id="search-results-table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Event ID</th>
+          <th scope="col">Image</th>
+          <th scope="col" style="width: 15%;">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col" style="width: 10%;">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventResults">
+          <td>{{event.id}}</td>
+          <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+          <td><strong>{{event.name}}</strong></td>
+          <td>{{event.description}}</td>
+          <td>{{event.startDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -31,6 +31,8 @@ export class EventsComponent implements OnInit {
       events => {
         this.events = events;
         console.log(this.events);
+        console.log('RELOAD COMPLETE');
+
       },
       fail => {
         console.error('EventsComponent.index(): error retrieving events');
@@ -86,8 +88,8 @@ export class EventsComponent implements OnInit {
         success => {
           console.log('Success destroying event');
           console.log(success);
+          this.selected = null;
           this.reload();
-          this.router.navigateByUrl('home');
         },
         fail => {
           console.error('EventsComponent.deleteEvent(): Error destroying event');
