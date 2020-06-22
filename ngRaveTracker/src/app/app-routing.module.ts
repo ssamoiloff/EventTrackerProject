@@ -7,9 +7,9 @@ import { SearchResultsComponent } from './components/search-results/search-resul
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent, runGuardsAndResolvers: 'always'},
   { path: 'events', component: EventsComponent},
-  { path: 'search/:search', component: SearchResultsComponent, runGuardsAndResolvers: "always"},
+  { path: 'search/:search', component: SearchResultsComponent, runGuardsAndResolvers: 'always'},
   { path: '', component: HomeComponent},
   { path: '**', component: NotFoundComponent }
 ];

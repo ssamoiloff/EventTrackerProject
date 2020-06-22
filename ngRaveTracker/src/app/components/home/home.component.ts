@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,24 @@ import { EventsService } from 'src/app/services/events.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private eventsService: EventsService) { }
+  navSubscription;
+
+  constructor(
+    private eventsService: EventsService,
+    private router: Router
+  ) {
+    this.navSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.index();
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.index();
+  }
+
+  index() {
     this.eventsService.index().subscribe(
       events => {
         console.log(events);
@@ -21,5 +37,4 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
 }
