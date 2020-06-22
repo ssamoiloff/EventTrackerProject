@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Event } from 'src/app/models/event';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
-  private baseURL = 'http://localhost:8084/';
-  private url = this.baseURL + 'api/events';
+  // private baseURL = 'http://localhost:8084/';
+  private url = environment.baseUrl + 'api/events';
 
   constructor(private http: HttpClient) {}
 
-  // TODO: get, post, put, delete
   index() {
     return this.http.get<Event[]>(this.url).pipe(
       catchError((err: any) => {

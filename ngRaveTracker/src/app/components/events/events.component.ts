@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
 
-  events = [];
+  events: Event[] = [];
   smEvents: Event[] = [];
   medEvents: Event[] = [];
   lgEvents: Event[] = [];
