@@ -12,6 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { AttendingPipe } from './pipes/attending.pipe';
+import { EventsService } from './services/events.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     NavBarComponent,
     NotFoundComponent,
     CreateEventComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    AttendingPipe
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,11 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     HttpClientModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    EventsService,
+    DatePipe,
+    AttendingPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,6 +10,7 @@ export class Event {
   endTime: Time;
   capacity: number;
   imgURL: string;
+  attending: boolean;
 
   constructor(
     id?: number,
@@ -20,7 +21,8 @@ export class Event {
     startTime?: Time,
     endTime?: Time,
     capacity?: number,
-    imgURL?: string
+    imgURL?: string,
+    attending?: boolean
   ) {
     this.id = id;
     this.name = name;
@@ -31,5 +33,6 @@ export class Event {
     this.endTime = endTime;
     this.capacity = capacity;
     this.imgURL = imgURL;
+    this.attending = attending;
   }
 }

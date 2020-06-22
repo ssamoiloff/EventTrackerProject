@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { Event } from 'src/app/models/event';
+import { AttendingPipe } from 'src/app/pipes/attending.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,14 +12,19 @@ import { Router } from '@angular/router';
 export class EventsComponent implements OnInit {
 
   events = [];
+  smEvents: Event[] = [];
+  medEvents: Event[] = [];
+  lgEvents: Event[] = [];
   newEvent: Event = new Event();
   editEvent = null;
   selected = null;
+  filterSelector = 1;
   isCollapsed: boolean;
 
   constructor(
     private eventsService: EventsService,
-    private router: Router
+    private router: Router,
+    private attPipe: AttendingPipe
   ) { }
 
   ngOnInit(): void {
@@ -30,9 +36,8 @@ export class EventsComponent implements OnInit {
     this.eventsService.index().subscribe(
       events => {
         this.events = events;
-        console.log(this.events);
+        this.filterEvents(events);
         console.log('RELOAD COMPLETE');
-
       },
       fail => {
         console.error('EventsComponent.index(): error retrieving events');
@@ -51,6 +56,24 @@ export class EventsComponent implements OnInit {
 
   setEditEvent() {
     this.editEvent = Object.assign({}, this.selected);
+  }
+
+  filterEvents(events) {
+    console.log('In filterEvents(), value of events passed in: '+events);
+
+    this.smEvents = events.filter(function(event) {
+      return event.capacity <= 10000;
+    });
+    this.medEvents = events.filter(function(event) {
+      return event.capacity > 10000 && event.capacity <= 20000;
+    });
+    this.lgEvents = events.filter(function(event) {
+      return event.capacity > 20000;
+    });
+  }
+
+  getNumEventsAttending() {
+    return this.attPipe.transform(this.events).length;
   }
 
   addEvent(event: Event) {
@@ -72,8 +95,8 @@ export class EventsComponent implements OnInit {
       event => {
         console.log(event);
         this.reload();
-        this.selected = event;
         this.editEvent = null;
+        this.router.navigateByUrl('');
       },
       fail => {
         console.error('EventsComponent.updateEvent(): Error updating event');

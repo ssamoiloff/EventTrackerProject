@@ -1,6 +1,24 @@
 <br><br><br><br>
-<div id="all-events" *ngIf="!selected">
-  <h2>All Events</h2>
+<h2 *ngIf="!selected">Events</h2>
+
+<div id="filter-buttons" *ngIf="!selected">
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="filterSelector">
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" [value]="1"> All
+    </label>
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" [value]="2"> Small
+    </label>
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" [value]="3"> Medium
+    </label>
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" [value]="4"> Large
+    </label>
+  </div>
+</div>
+
+<div id="all-events" *ngIf="!selected && filterSelector === 1">
   <br>
   <table class="table table-hover table-dark" id="all-events-table">
     <thead class="thead-light">
@@ -9,23 +27,94 @@
         <th scope="col" style="width: 15%;">Event Name</th>
         <th scope="col">Description</th>
         <th scope="col" style="width: 10%;">Date</th>
+        <th scope="col">Attending</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let event of events" (click)="displayEvent(event)">
+      <tr *ngFor="let event of events">
         <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
-        <td><strong>{{event.name}}</strong></td>
+        <td (click)="displayEvent(event)"><strong>{{event.name}}</strong></td>
         <td>{{event.description}}</td>
         <td>{{event.startDate | date}}</td>
+        <td style="text-align: center;">
+          <input type="checkbox" name="check" (change)="updateEvent(event)" [(ngModel)]="event.attending"></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<div id="create-event-div" *ngIf="!selected && !editEvent">
-  <app-create-event></app-create-event>
+<div id="filtered-events" *ngIf="!selected && filterSelector !==1">
+  <br>
+  <div id="sm-events" *ngIf="filterSelector === 2">
+    <table class="table table-hover table-dark" id="sm-events-table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col" style="width: 15%;">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col" style="width: 10%;">Date</th>
+          <th scope="col">Attending</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of smEvents">
+          <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+          <td (click)="displayEvent(event)"><strong>{{event.name}}</strong></td>
+          <td>{{event.description}}</td>
+          <td>{{event.startDate | date}}</td>
+          <td style="text-align: center;">
+            <input type="checkbox" name="check" (change)="updateEvent(event)" [(ngModel)]="event.attending"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="med-events" *ngIf="filterSelector === 3">
+    <table class="table table-hover table-dark" id="med-events-table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col" style="width: 15%;">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col" style="width: 10%;">Date</th>
+          <th scope="col">Attending</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of medEvents">
+          <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+          <td (click)="displayEvent(event)"><strong>{{event.name}}</strong></td>
+          <td>{{event.description}}</td>
+          <td>{{event.startDate | date}}</td>
+          <td style="text-align: center;">
+            <input type="checkbox" name="check" (change)="updateEvent(event)" [(ngModel)]="event.attending"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="lg-events" *ngIf="filterSelector === 4">
+    <table class="table table-hover table-dark" id="lg-events-table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col" style="width: 15%;">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col" style="width: 10%;">Date</th>
+          <th scope="col">Attending</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of lgEvents">
+          <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+          <td (click)="displayEvent(event)"><strong>{{event.name}}</strong></td>
+          <td>{{event.description}}</td>
+          <td>{{event.startDate | date}}</td>
+          <td style="text-align: center;">
+            <input type="checkbox" name="check" (change)="updateEvent(event)" [(ngModel)]="event.attending"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 
 <div id="event-details" *ngIf="selected && !editEvent">
   <h2>Event Details</h2>
@@ -111,5 +200,34 @@
       </form>
     </div>
   </div>
+</div>
+<br>
+
+<div id="events-attending" *ngIf="!selected">
+  <h2>Events Attending <span><h3>-{{getNumEventsAttending()}}-</h3></span></h2>
+  <br>
+  <table class="table table-hover table-dark" id="events-attending-table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col" style="width: 15%;">Event Name</th>
+        <th scope="col">Description</th>
+        <th scope="col" style="width: 10%;">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events | attending">
+        <td><img src="{{event.imgURL}}" style="max-width: 90px; max-height: 90px;"></td>
+        <td (click)="displayEvent(event)"><strong>{{event.name}}</strong></td>
+        <td>{{event.description}}</td>
+        <td>{{event.startDate | date}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<div id="create-event-div" *ngIf="!selected && !editEvent">
+  <app-create-event></app-create-event>
 </div>
 <br>
