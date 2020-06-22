@@ -84,6 +84,7 @@ public class EventServiceImpl implements EventService {
 			updated.setStartTime(event.getStartTime());
 			updated.setEndTime(event.getEndTime());
 			updated.setImgURL(event.getImgURL());
+			updated.setAttending(event.isAttending());
 			repo.saveAndFlush(updated);
 			return updated;
 		} else {

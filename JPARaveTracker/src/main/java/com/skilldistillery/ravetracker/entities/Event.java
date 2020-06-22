@@ -41,6 +41,7 @@ public class Event {
 	@Column(name = "updated_on")
 	@UpdateTimestamp
 	private LocalDateTime updatedOn;
+	private boolean attending;
 	private boolean enabled;
 //	@JsonBackReference
 //	@ManyToOne
@@ -135,6 +136,14 @@ public class Event {
 
 	public void setUpdatedOn(LocalDateTime updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public boolean isAttending() {
+		return attending;
+	}
+
+	public void setAttending(boolean attending) {
+		this.attending = attending;
 	}
 
 	public boolean isEnabled() {
